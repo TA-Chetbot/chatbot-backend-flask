@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from ai_model import preprocess_text, generate_text_sampling_top_p_nucleus_22
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/', methods=['GET'])
 def read_root():
