@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from ai_model import preprocess_text, generate_text_sampling_top_p_nucleus_22
+from ai_model import preprocess_question, generate_text_sampling_top_p_nucleus_22
 
 app = Flask(__name__)
 CORS(app)
@@ -15,9 +15,9 @@ def get_answer():
     data = request.get_json()
     question = data.get('question')
     if question:
-        question = preprocess_text(question)
+        question = preprocess_question(question)
         answer = generate_text_sampling_top_p_nucleus_22(question)
-        return jsonify({"question": question, "answer": answer})
+        return jsonify({"preprocessed_question": question, "answer": answer})
     else:
         return jsonify({"error": "No question provided"}), 400
 
