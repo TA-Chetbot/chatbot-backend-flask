@@ -14,7 +14,7 @@ tokenizer_pattern: str = r"\b\w[\w']*\b"
 
 stemmer = PorterStemmer()
 
-def preprocess_text(text):
+def clean_text(text):
     # Menghapus @mentions
     text = re.sub(r'@\w+', '', text)
 
@@ -94,7 +94,7 @@ def preprocess_text_en(text: str,
   )
   return words
 
-def preprocess_answer(text):
+def clean_answer(text):
   split_output = text.split('### Answer:')
   answer_split = split_output[1].split(' ')
   answer = ''
@@ -132,11 +132,11 @@ def generate_text_sampling_top_p_nucleus_22(
       top_k=0,
   )
   sampling_output_text: str = tokenizer.batch_decode(sampling_output_tensor, skip_special_tokens=True)[0]
-  answer = preprocess_answer(sampling_output_text)
+  answer = clean_answer(sampling_output_text)
   return answer
 
 def preprocess_question(text):
-    prep1 = preprocess_text(text)
+    prep1 = clean_text(text)
     return preprocess_text_en(prep1, stemmer, tokenizer_pattern, nlp)
 
 device: torch.device = torch.device("cuda") \
