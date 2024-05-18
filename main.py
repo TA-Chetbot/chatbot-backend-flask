@@ -18,9 +18,9 @@ def get_answer():
     return jsonify({"answer": answer})
 
 @app.route('/preprocess_question', methods=['POST'])
-def preprocess_question():
+def preprocess():
     data = request.get_json()
-    question = data.get('question')
+    question = data.get('text')
     return jsonify({"preprocessed_question": preprocess_question(question)})
 
 if __name__ == '__main__':
